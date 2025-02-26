@@ -1,24 +1,42 @@
-# README
+# user-management
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# **Development Version**
 
-Things you may want to cover:
+Ruby 3.1.6
 
-* Ruby version
+Rails 6.1.7.6
 
-* System dependencies
+```jsx
+bin/rails server
+```
 
-* Configuration
+Start the server and confirm that there are no errors. Then, check [**http://localhost:3000**](http://localhost:3000/) to verify that the current version information is displayed correctly.
 
-* Database creation
+![image.png](assets/image.png)
 
-* Database initialization
+# Troubleshooting
 
-* How to run the test suite
+When creating and starting a new project I encountered some errors. I have documented them below for reference.
 
-* Services (job queues, cache servers, search engines, etc.)
+### Issue: installing Rails 6.1.7.6, any command results in an error.
 
-* Deployment instructions
+![image.png](assets/image%201.png)
 
-* ...
+### Solution
+
+Force the version in `Gemfile` to **not exceed 1.3.4**
+
+[https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror](https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror)
+
+### Issue: Webpacker configuration file not found
+
+![image.png](assets/image%202.png)
+
+### Solution
+
+install web packer
+
+```jsx
+npm install --global yarn
+rails webpacker:install
+```
