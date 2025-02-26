@@ -7,6 +7,7 @@ Ruby 3.1.6
 Rails 6.1.7.6
 
 ```jsx
+bundle install
 bin/rails server
 ```
 
