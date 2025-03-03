@@ -41,3 +41,20 @@ install web packer
 npm install --global yarn
 rails webpacker:install
 ```
+
+### Issue: Cannot find package @babel.....
+![img.png](assets/img.png)
+
+### Solution
+change the name ``proposal to transform`` in your babel.config.js
+
+@babel/plugin-transform-private-methods
+@babel/plugin-transform-private-property-in-object
+
+``` sh
+yarn add @babel/plugin-transform-private-methods
+yarn add @babel/plugin-transform-private-property-in-object
+```
+
+https://github.com/rails/rails/issues/48372
+yarn add @babel/plugin-transform-private-property-in-object
