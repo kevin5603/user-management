@@ -9,6 +9,21 @@
   </div>
 
   <div class="field">
+    <%= f.label :'First Name' %><br />
+    <%= f.text_field :first_name%>
+  </div>
+
+  <div class="field">
+    <%= f.label :'Last Name' %><br />
+    <%= f.text_field :last_name%>
+  </div>
+
+  <div class="field">
+    <%= f.label :'Phone Number' %><br />
+    <%= f.text_field :phone_number%>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
@@ -27,3 +42,14 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<script>
+  // TODO
+  function verify_phone_number(phone_number) {
+      console.log('verify phone number: ' + phone_number);
+      const phone_pattern = /^09[0-9]{8}$/;
+      const res = phone_pattern.test(phone_number);
+      console.log("is match?: " + res);
+  }
+
+</script>

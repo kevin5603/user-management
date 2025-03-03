@@ -11,8 +11,41 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <ul class="nav justify-content-end navbar-light bg-light">
+
+      <% if user_signed_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %></a>
+        <a class="dropdown-item" href="/users/sign_out" data-turbo-method="delete" ><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Profile</a>
+
+        </div>
+      <% else %>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/sign_in">Sign In</a>
+        </li>
+      <% end %>
+    </ul>
+    <% if notice %>
+      <div class="alert alert-success notice" role="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div class="alert alert-danger alert" role="alert">
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

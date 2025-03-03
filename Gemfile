@@ -59,3 +59,4 @@ gem 'concurrent-ruby', '<= 1.3.4'
 
 gem "devise", "~> 4.9"
 gem "pg"
+gem 'bootstrap', '~> 5.3.3'
