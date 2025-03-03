@@ -8,6 +8,7 @@
       %th Email
       %th Job title
       %th Phone number
+      %th Roles
       %th
       %th
       %th
@@ -24,9 +25,13 @@
           - user.roles.each do |role|
             = role.name
         %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          - if can? :update, user
+            = link_to 'Edit', edit_user_path(user)
+        %td
+          - if can? :delete, user
+            = link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
-
-= link_to 'New User', new_user_path
+- if can? :create, current_user
+  = link_to 'New User', new_user_path

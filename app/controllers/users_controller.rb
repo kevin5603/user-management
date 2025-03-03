@@ -1,15 +1,20 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[ show edit update destroy ]
+  # before_action :set_user, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    if current_user.admin? || current_user.manager?
+      @users = User.all
+    else
+      @users = User.where(id: current_user.id)
+    end
   end
 
   # GET /users/1 or /users/1.json
-  def show
-  end
+  # def show
+  # end
 
   # GET /users/new
   def new
@@ -18,6 +23,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    authorize! :edit, @user
   end
 
   # POST /users or /users.json

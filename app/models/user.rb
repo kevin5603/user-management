@@ -14,4 +14,16 @@ class User < ApplicationRecord
   def assign_role
     self.roles.append(Role.find_by name: 'Regular') if self.roles.empty?
   end
+
+  def admin?
+    roles.exists?(name: 'Admin')
+  end
+
+  def manager?
+    roles.exists?(name: 'Manager')
+  end
+
+  def regular?
+    roles.exists?(name: 'Regular')
+  end
 end
