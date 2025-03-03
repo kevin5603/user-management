@@ -1,19 +1,30 @@
-<h1>Users Management</h1>
-
-<br/>
-
 <div class="container">
-  <div class="row">
-    <div class="col col-3">1</div>
-    <div class="col col-3">2</div>
-    <div class="col col-3">3</div>
-  </div>
-</div>
-
-<div>
-  <% @users.each do |user| %>
-    <div>
-      <%= user.email %>
-    </div>
-  <% end %>
+  <h1>Users Management</h1>
+  <hr>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Job Title</th>
+      <th scope="col">action</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @users.each_with_index do |user, index| %>
+        <tr>
+          <th scope="row"><%= index + 1 %></th>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone_number %></td>
+          <td><%= user.job_title %></td>
+          <td><%= button_to "Update Profile", edit_user_path(user), method: :get, class: "btn btn-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
