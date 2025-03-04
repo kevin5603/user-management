@@ -61,3 +61,4 @@ gem "devise", "~> 4.9"
 gem "pg"
 gem 'bootstrap', '~> 5.3.3'
 gem "cancancan"
+gem "sidekiq"
