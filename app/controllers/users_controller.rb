@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[show edit destroy]
+  before_action :set_user, only: %i[show edit update destroy]
   authorize_resource class: false
+  include UsersHelper
 
   def index
     @users = User.all
@@ -9,12 +10,19 @@ class UsersController < ApplicationController
 
   def edit
     puts @user.inspect
-    render json: @user
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to users_path, notice: "User updated successfully."
+    else
+      render :action => 'edit'
+    end
   end
 
   def destroy
-    puts @user.inspect
-    render json: @user
+    @user.destroy
+    redirect_to users_path, notice: "User deleted successfully."
   end
 
   def show
@@ -27,6 +35,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :first_name, :last_name, :phone_number, :job_title)
   end
 
 end

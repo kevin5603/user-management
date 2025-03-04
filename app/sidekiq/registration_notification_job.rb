@@ -1,10 +1,14 @@
 class RegistrationNotificationJob
   include Sidekiq::Job
 
-  def perform(email, first_name, last_name)
+  def perform(register_email, first_name, last_name)
     # Do something
     puts "===== start job ====="
-    AdminMailer.registration_notification(email, first_name, last_name).deliver_now
+    @users = User.includes(:roles).where(roles: { name: 'admin' })
+    @users.each do |admin|
+      puts "=== admin: #{admin.email} ==="
+      AdminMailer.registration_notification(admin.email, register_email, first_name, last_name).deliver_now
+    end
     puts "===== finish job ====="
   end
 end
