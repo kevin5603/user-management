@@ -1,0 +1,17 @@
+admin_role:
+  id: 1
+  name: 'Admin'
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+manager_role:
+  id: 2
+  name: 'Manager'
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+regular_role:
+  id: 3
+  name: 'Regular'
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

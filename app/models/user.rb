@@ -11,9 +11,14 @@ class User < ApplicationRecord
   validates :phone_number, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
 
   before_save :assign_role
+  after_create :notify_admins
 
   def assign_role
     self.roles.append(Role.find_by name: 'Regular') if self.roles.empty?
+  end
+
+  def notify_admins
+    AdminNotificationJob.perform_async(self.id)
   end
 
   def admin?
