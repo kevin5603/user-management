@@ -10,6 +10,8 @@ admin_user:
   phone_number: '1234567890'
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
+  confirmed_at: <%= Time.current %>
+  confirmation_sent_at: <%= Time.current %>
 
 manager_user:
   id: 2
