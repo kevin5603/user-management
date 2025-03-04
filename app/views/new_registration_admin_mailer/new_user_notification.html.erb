@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>New User Registration</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          color: #333333;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+      .header {
+          border-bottom: 2px solid #4285f4;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+      }
+      .section-title {
+          background-color: #f2f2f2;
+          padding: 8px;
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+      .info-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 20px;
+      }
+      .info-table td {
+          padding: 8px;
+          border-bottom: 1px solid #ddd;
+      }
+      .info-table td:first-child {
+          font-weight: bold;
+          width: 40%;
+      }
+      .action-items {
+          background-color: #f9f9f9;
+          padding: 15px;
+          margin-bottom: 20px;
+          border-left: 4px solid #4285f4;
+      }
+      .checkbox {
+          margin-right: 10px;
+      }
+      .footer {
+          font-size: 12px;
+          color: #777;
+          margin-top: 30px;
+          padding-top: 10px;
+          border-top: 1px solid #ddd;
+      }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h2>New User Registration: <%= @user.first_name + " " + @user.last_name %></h2>
+</div>
+
+<p>Hello Admin,</p>
+
+<p>A new user has registered on the platform.</p>
+
+<div class="section-title">User Details</div>
+<table class="info-table">
+  <tr>
+    <td>Email:</td>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <td>Registration Date:</td>
+    <td><%= @user.created_at %></td>
+  </tr>
+  <tr>
+    <td>Job Title:</td>
+    <td><%= @user.job_title %></td>
+  </tr>
+</table>
+
+<div class="section-title">Action Required</div>
+<div class="action-items">
+  <p><span class="checkbox">☐</span> Verify user information</p>
+  <p><span class="checkbox">☐</span> Assign user permissions</p>
+  <p><span class="checkbox">☐</span> Approve account (if manual approval is required)</p>
+</div>
+
+<p>For any questions or concerns, please contact the IT support team.</p>
+
+<p>Thank you,<br>
+  Notification System</p>
+
+<div class="footer">
+  This is an automated message. Please do not reply directly to this email.
+</div>
+</body>
+</html>
