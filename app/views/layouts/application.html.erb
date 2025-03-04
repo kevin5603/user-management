@@ -14,7 +14,8 @@
     <ul class="nav justify-content-end navbar-light bg-light">
 
       <% if user_signed_in? %>
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %></a>
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link"><%= current_user.email %></a>
         <a class="nav-link" href="/users/edit">Profile</a>
         <a class="nav-link" href="/users/sign_out" data-method="delete" >Sign Out</a>
       <% else %>

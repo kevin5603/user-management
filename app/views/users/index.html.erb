@@ -10,6 +10,7 @@
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Job Title</th>
+      <th scope="col">Role</th>
       <th scope="col">action</th>
     </tr>
     </thead>
@@ -22,7 +23,9 @@
           <td><%= user.email %></td>
           <td><%= user.phone_number %></td>
           <td><%= user.job_title %></td>
-          <td><%= button_to "Update Profile", edit_user_path(user), method: :get, class: "btn btn-primary" %></td>
+          <td><%= user.roles.map(&:name).join("\n") %></td>
+          <td><%= button_to "Update Profile", edit_user_path(user.id), method: :get, class: "btn btn-primary" %></td>
+          <td><%= button_to "Delete Profile", user_path(user.id), method: :delete, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>

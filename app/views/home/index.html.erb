@@ -1,8 +1,34 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<h1>這邊要顯示所有可以操作的介紹</h1>
-<h2>admin</h2>
+<h1>User Management</h1>
 
-<h2>manager</h2>
+<% if user_signed_in? %>
+  <% if (%w[admin manager] & current_user.roles.map(&:name)).any?%>
+    <%= link_to "show all user", users_path, class: "btn btn-primary" %>
+    <br/><br/>
+  <% end %>
+  <h2>user</h2>
+  <div>
+    <ul>
+      <li>僅可編輯自己檔案</li>
+    </ul>
+  </div>
+  <h2>manager</h2>
+  <div>
+    email: manager@a.com password: 111111
+    <ul>
+      <li>user有的功能</li>
+      <li>可觀看所有使用者</li>
+    </ul>
+  </div>
+  <h2>admin</h2>
+  <div>
+    email: admin@a.com password: 111111
+    <ul>
+      <li>manager有的功能</li>
+      <li>可編輯所有使用者</li>
+    </ul>
+  </div>
+<% else %>
+  <div>Please Sign In first</div>
+<% end %>
 
-<h2>user</h2>
+
