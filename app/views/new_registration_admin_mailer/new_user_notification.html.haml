@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>New User Registration</title>
-  <style>
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "UTF-8"}/
+    %title New User Registration
+    :css
       body {
           font-family: Arial, sans-serif;
           line-height: 1.6;
@@ -52,47 +53,38 @@
           padding-top: 10px;
           border-top: 1px solid #ddd;
       }
-  </style>
-</head>
-<body>
-<div class="header">
-  <h2>New User Registration: <%= @user.first_name + " " + @user.last_name %></h2>
-</div>
-
-<p>Hello Admin,</p>
-
-<p>A new user has registered on the platform.</p>
-
-<div class="section-title">User Details</div>
-<table class="info-table">
-  <tr>
-    <td>Email:</td>
-    <td><%= @user.email %></td>
-  </tr>
-  <tr>
-    <td>Registration Date:</td>
-    <td><%= @user.created_at %></td>
-  </tr>
-  <tr>
-    <td>Job Title:</td>
-    <td><%= @user.job_title %></td>
-  </tr>
-</table>
-
-<div class="section-title">Action Required</div>
-<div class="action-items">
-  <p><span class="checkbox">☐</span> Verify user information</p>
-  <p><span class="checkbox">☐</span> Assign user permissions</p>
-  <p><span class="checkbox">☐</span> Approve account (if manual approval is required)</p>
-</div>
-
-<p>For any questions or concerns, please contact the IT support team.</p>
-
-<p>Thank you,<br>
-  Notification System</p>
-
-<div class="footer">
-  This is an automated message. Please do not reply directly to this email.
-</div>
-</body>
-</html>
+  %body
+    .header
+      %h2
+        New User Registration: #{@user.first_name + " " + @user.last_name}
+    %p Hello Admin,
+    %p A new user has registered on the platform.
+    .section-title User Details
+    %table.info-table
+      %tr
+        %td Email:
+        %td= @user.email
+      %tr
+        %td Registration Date:
+        %td= @user.created_at
+      %tr
+        %td Job Title:
+        %td= @user.job_title
+    .section-title Action Required
+    .action-items
+      %p
+        %span.checkbox ☐
+        Verify user information
+      %p
+        %span.checkbox ☐
+        Assign user permissions
+      %p
+        %span.checkbox ☐
+        Approve account (if manual approval is required)
+    %p For any questions or concerns, please contact the IT support team.
+    %p
+      Thank you,
+      %br/
+      Notification System
+    .footer
+      This is an automated message. Please do not reply directly to this email.
