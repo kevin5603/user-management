@@ -56,3 +56,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # fix logger error
 gem 'concurrent-ruby', '<= 1.3.4'
+
+gem "devise", "~> 4.9"
+
+gem "cancancan", "~> 3.6"
+gem "sidekiq", "~> 7.3"
+gem "haml", "~> 6.3"

@@ -1,5 +1,44 @@
 # user-management
 
+> a ruby on rails practice project
+ 
+## Requirement
+
+1. User & Role Management
+
+   Implement full CRUD operations for users.
+   Users will have the following attributes:
+   first_name, last_name, email, job_title, phone_number (with format validation), password (handled via devise).
+   Only admins can create, update, or delete other users.
+   Managers can view all users but cannot modify their data.
+   Regular users can only view their own profile.
+
+2. Authentication
+
+   Use the devise gem for authentication.
+   Users must sign in to access the system.
+   Implement password reset functionality via devise.
+
+3. Authorization
+
+   Use cancancan to define and manage user permissions.
+   Users can have multiple roles (admin, manager, regular user).
+   Define access control:
+   Admins can manage all users, including assigning roles.
+   Managers can view all users but cannot modify them.
+   Regular users can only view and edit their own profiles.
+
+4. Email Verification
+
+   After user registration, send a verification email with a confirmation link.
+   Users must verify their email before accessing the system.
+   Implement an email re-verification process in case the email is not confirmed.
+
+5. Email Notifications
+
+   Use Sidekiq for background email processing.
+   Admins receive a notification when a new user registers.
+ 
 # **Development Version**
 
 Ruby 3.1.6
