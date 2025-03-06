@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title UserManagement
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %ul.nav.justify-content-end.navbar-light.bg-light
+      - if user_signed_in?
+        %a.nav-link{:href => "/"} Home
+        %a.nav-link= current_user.email
+        %a.nav-link{:href => "/users/edit"} Profile
+        %a.nav-link{"data-method" => "delete", :href => "/users/sign_out"} Sign Out
+      - else
+        %li.nav-item
+          %a.nav-link{:href => "/users/sign_in"} Sign In
+    - if notice
+      .alert.alert-success.notice{:role => "alert"}
+        = notice
+    - if alert
+      .alert.alert-danger.alert{:role => "alert"}
+        = alert
+    = yield

@@ -50,6 +50,7 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'simplecov'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -62,3 +63,6 @@ gem "pg"
 gem 'bootstrap', '~> 5.3.3'
 gem "cancancan"
 gem "sidekiq"
+gem "haml"
+gem "haml-rails"
+gem "html2haml"

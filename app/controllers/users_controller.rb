@@ -9,14 +9,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-    puts @user.inspect
+    @roles = Role.all
   end
 
   def update
     if @user.update(user_params)
+      @user.roles = Role.where(id: params[:user][:role_ids])
       redirect_to users_path, notice: "User updated successfully."
     else
-      render :action => 'edit'
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +28,6 @@ class UsersController < ApplicationController
 
   def show
     res = @user.to_json(include: {roles: {only: [:name]}})
-    puts res
     render json: res
   end
 

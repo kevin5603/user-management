@@ -1,0 +1,25 @@
+.container
+  %h1 User Management
+  - if user_signed_in?
+    - if (%w[admin manager] & current_user.roles.map(&:name)).any?
+      = link_to "show all user", users_path, class: "btn btn-primary"
+      %br/
+      %br/
+    %h2 user
+    %div
+      %ul
+        %li 僅可編輯自己檔案
+    %h2 manager
+    %div
+      email: manager@a.com password: 111111
+      %ul
+        %li user有的功能
+        %li 可觀看所有使用者
+    %h2 admin
+    %div
+      email: admin@a.com password: 111111
+      %ul
+        %li manager有的功能
+        %li 可編輯所有使用者
+  - else
+    %div Please Sign In first
