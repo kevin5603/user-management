@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :phone_number, format: {
-    with: /\A\+?[\d\s\-\(\)]{10,15}\z/,
-    message: "must be a valid phone number"
+    with: /\A\+?[\d\s\-()]{10,15}\z/,
+    message: 'must be a valid phone number'
   }
 end
