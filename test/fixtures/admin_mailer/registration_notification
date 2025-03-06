@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <h1>New User Signed Up</h1>
+<h1>New User Signed Up</h1>
 <p>A new user has signed up: new_user@a.com</p>
 <p>first name: Kevin</p>
 <p>last name: Lee</p>

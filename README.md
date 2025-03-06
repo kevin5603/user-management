@@ -58,3 +58,26 @@ yarn add @babel/plugin-transform-private-property-in-object
 
 https://github.com/rails/rails/issues/48372
 yarn add @babel/plugin-transform-private-property-in-object
+
+
+### Issue: Simplecov not showing correct coverage in Rails 6
+
+The coverage report is displaying incorrectly.
+
+![img3.png](assets/img3.png)
+
+### Solution
+comment parallelize(workers: :number_of_processors)
+```angular2html
+class ActiveSupport::TestCase
+  # Run tests in parallel with specified workers
+  # parallelize(workers: :number_of_processors)
+
+  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+  fixtures :all
+
+  # Add more helper methods to be used by all tests here...
+end
+```
+
+https://stackoverflow.com/questions/64840931/simplecov-not-showing-correct-coverage-in-rails-6

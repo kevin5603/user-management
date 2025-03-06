@@ -14,9 +14,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "creating a user assigns default role" do
-    user = User.create!(@valid_user_params)
+    RegistrationNotificationJob.stub(:perform_async, nil) do
+      user = User.create!(@valid_user_params)
 
-    assert user.roles.exists?(name: "regular_user"), "User should be assigned a default role"
+      assert user.roles.exists?(name: "regular_user"), "User should be assigned a default role"
+    end
   end
 
   test "creating a user enqueues notification job" do

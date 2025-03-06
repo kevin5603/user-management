@@ -26,11 +26,6 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "User deleted successfully."
   end
 
-  def show
-    res = @user.to_json(include: {roles: {only: [:name]}})
-    render json: res
-  end
-
   private
 
   def set_user

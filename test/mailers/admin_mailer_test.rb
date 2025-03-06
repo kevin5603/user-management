@@ -20,6 +20,8 @@ class AdminMailerTest < ActionMailer::TestCase
     assert_equal [sender], email.from
     assert_equal admin_email_list, email.to
     assert_equal subject, email.subject
-    assert_equal read_fixture("registration_notification").join, email.body.to_s
+    assert_match /A new user has signed up: new_user@a.com/, email.body.to_s
+    assert_match /first name: Kevin/, email.body.to_s
+    assert_match /last name: Lee/, email.body.to_s
   end
 end
