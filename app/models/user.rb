@@ -5,6 +5,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :user_roles
+  has_many :roles, through: :user_roles
+
   validates :phone_number, format: {
     with: /\A\+?[\d\s\-()]{10,15}\z/,
     message: 'must be a valid phone number',
