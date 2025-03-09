@@ -1,7 +1,42 @@
 # user-management
 
 > a ruby on rails practice project
- 
+
+## Refined Requirement
+
+### model
+
+- User has
+  - first_name _string_
+  - last_name _string_
+  - job_title _string_
+  - phone_number _string_ validate format
+  - email (devise)
+  - password (devise)
+  - has_many Role
+- Role has
+  - name _string_
+  - description _string_
+  - has_many Permissions
+  - _instances:
+    - admin
+    - manager
+    - user (regular user)
+- Permission has
+  - name _string_
+  - description _string_
+  - _instances:
+    - view user 
+    - crate user
+    - update user
+    - delete user
+
+### Feature
+
+- view
+- email verification (devise)
+- email notification (Sidekiq)
+
 ## Requirement
 
 1. User & Role Management
@@ -38,7 +73,7 @@
 
    Use Sidekiq for background email processing.
    Admins receive a notification when a new user registers.
- 
+
 # **Development Version**
 
 Ruby 3.1.6
