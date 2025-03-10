@@ -10,26 +10,27 @@
   </div>
 
   <div class="field">
+    <%= f.label :phone_number %><br />
+    <%= f.text_field :phone_number, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :job_title%><br />
+    <%= f.text_field :job_title, autofocus: true %>
+  </div>
+
+  <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <%# if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-<!--    <div>Currently waiting confirmation for: <%#= resource.unconfirmed_email %></div>-->
-  <%# end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+  <div class="roles-selection">
+    <% @roles.each do |role| %>
+      <div>
+        <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: "user_role_#{role.id}" %>
+        <%= label_tag "user_role_#{role.id}", role.name %>
+      </div>
     <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div>
