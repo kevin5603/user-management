@@ -2,37 +2,45 @@
 
 - if user_signed_in?
   %p
-    Logged in as #{current_user.email}
+    Logged in as #{current_user.email} (Role: #{current_user.roles.pluck(:name).join(", ")})
     = link_to "Logout", destroy_user_session_path, method: :delete
 
-%table.table
-  %thead
-    %tr
-      %th Name
-      %th Email
-      %th Job Title
-      %th Phone Number
-      %th Actions
-
-  %tbody
-    - @users.each do |user|
+- if can?(:read, User) # Only Admins and Managers should see the user list
+  %table.table
+    %thead
       %tr
-        %td= user.full_name
-        %td= user.email
-        %td= user.job_title
-        %td= user.phone_number
-        %td
-          = link_to 'Show', user
+        %th Name
+        %th Email
+        %th Job Title
+        %th Phone Number
+        %th Roles
+        %th Actions
 
-          - if can?(:update, user)
-            | |
-            = link_to 'Edit', edit_user_path(user)
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.full_name
+          %td= user.email
+          %td= user.job_title
+          %td= user.phone_number
+          %td= user.roles.pluck(:name).join(", ") # Display user roles
 
-          - if can?(:destroy, user)
-            | |
-            = link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }
+          %td
+            = link_to 'Show', user if can?(:read, user) # Everyone can see "Show"
 
-%br
+            - if can?(:update, user) # Only Admins can edit
+              | |
+              = link_to 'Edit', edit_user_path(user)
 
-- if can?(:create, User)
-  = link_to 'New User', new_user_path
+            - if can?(:destroy, user) # Only Admins can delete
+              | |
+              = link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }
+
+  %br
+
+  - if can?(:create, User) # Only Admins can create new users
+    = link_to 'New User', new_user_path
+
+- elsif current_user.roles.exists?(name: 'user') # Regular users only see their profile
+  %p
+    = link_to 'View Your Profile', user_path(current_user)
