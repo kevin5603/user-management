@@ -1,6 +1,5 @@
 # simple controller for users
 class UsersController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update destroy]
   load_and_authorize_resource
 
@@ -30,6 +29,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    # TODO: remove roles
     success = User.transaction do
       @user.roles = Role.where(id: user_params[:role_ids]).to_a if user_params[:role_ids]
       # TODO: add edit permission permission
@@ -44,7 +44,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # TODO: add destroy
+  def destroy
+    @user.destroy
+    redirect_to users_url, notice: 'User was successfully destroyed.'
+  end
 
   private
 

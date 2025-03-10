@@ -15,12 +15,13 @@
       <!-- Content for logged-in users -->
       <p>Welcome, <%= current_user.first_name %>, <%= current_user.last_name %>, <%= current_user.email %>!</p>
       <p>
+        <%= link_to "Home", home_index_path %>
         <% if can? :index, @user %>
           <%= link_to "View all users", users_path%>
         <% end %>
-        <%= link_to "View my profile", user_path(current_user), method: :get%>
-        <%= link_to "Edit my profile", edit_user_registration_path, method: :get %>
-        <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+        <%= link_to "View my profile", user_path(current_user), method: :get if can? :show, current_user%>
+        <%= link_to "Edit my profile", edit_user_registration_path, method: :get if can? :edit, current_user%>
+        <%= link_to "Sign out", destroy_user_session_path, method: :delete%>
       </p>
     <% else %>
       <!-- Content for guests -->
