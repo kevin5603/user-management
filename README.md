@@ -2,6 +2,8 @@
 
 > a ruby on rails practice project
 
+[quick note](https://hackmd.io/@wasabi-neko/Syf9TQncyx)
+
 ## Refined Requirement
 
 ### model
