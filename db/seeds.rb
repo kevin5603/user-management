@@ -10,9 +10,11 @@ create_users = Permission.find_or_create_by(name: 'create', description: 'Create
 edit_users = Permission.find_or_create_by(name: 'edit', description: 'Displays the form to edit users')
 update_users = Permission.find_or_create_by(name: 'update', description: 'Update users')
 destroy_users = Permission.find_or_create_by(name: 'destroy', description: 'Delete the user')
+update_user_roles = Permission.find_or_create_by(name: 'update_user_roles', description: 'update the roles of a user')
 
 admin_role.permissions.clear
-admin_role.permissions.push(index_users, show_users, new_users, create_users, edit_users, update_users, destroy_users)
+admin_role.permissions.push(index_users, show_users, new_users, create_users, edit_users, update_users, destroy_users, 
+                            update_user_roles)
 manager_role.permissions.clear
 manager_role.permissions.push(index_users, show_users)
 
@@ -30,8 +32,8 @@ end
 admin_user.roles << admin_role unless admin_user.roles.include?(admin_role)
 
 # create default manager
-manger_user = User.find_by(email: 'manager@example.com')
-if manger_user.nil?
+manager_user = User.find_by(email: 'manager@example.com')
+if manager_user.nil?
   manager_user = User.create!(
     first_name: 'default',
     last_name: 'manager',

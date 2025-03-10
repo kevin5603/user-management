@@ -1,6 +1,16 @@
 <h1>Users#show</h1>
-<p>
+<div>
   <%= link_to "edit this user", edit_user_path(@user)  %>
-  <br>
-  <%= @user.inspect %>
-</p>
+</div>
+<br>
+
+<div>
+  <p>
+    <%= @user.inspect %>
+  </p>
+  <p>
+    <% @user.roles.each do |role| %>
+      <%= role.name %>,
+    <% end %>
+  </p>
+</div>

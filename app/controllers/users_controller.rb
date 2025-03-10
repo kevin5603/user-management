@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   # TODO: do I really need registration.edit?
   def edit
     @user = User.find(params[:id])
-    @roles = Role.all
+    @available_roles = Role.all if can? :update_user_roles, @user
   end
 
   def update
@@ -48,6 +48,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :job_title, :phone_number, role_ids: [])
+    basic_permits = %i[first_name last_name email job_title phone_number]
+    basic_permits.push(role_ids: []) if can? :update_user_roles, @user
+    params.require(:user).permit(basic_permits)
   end
 end

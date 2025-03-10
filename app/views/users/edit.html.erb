@@ -24,14 +24,16 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <div class="roles-selection">
-    <% @roles.each do |role| %>
-      <div>
-        <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: "user_role_#{role.id}" %>
-        <%= label_tag "user_role_#{role.id}", role.name %>
-      </div>
-    <% end %>
-  </div>
+  <% if @available_roles.presence %>
+    <div class="roles-selection">
+      <% @available_roles.each do |role| %>
+        <div>
+          <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: "user_role_#{role.id}" %>
+          <%= label_tag "user_role_#{role.id}", role.name %>
+        </div>
+      <% end %>
+    </div>
+   <% end %>
 
   <div>
     <%= f.submit "Update" %>
