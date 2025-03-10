@@ -4,15 +4,18 @@ require "minitest/mock"
 
 class RegistrationNotificationJobTest < ActiveJob::TestCase
   def setup
-    @expected_admin_emails = [users(:admin_user).email, users(:admin_user2).email]
-    @new_user = users(:regular_user)
+    admin = FactoryBot.create(:user, :admin)
+    admin2 = FactoryBot.create(:user, :admin)
+    @expected_admin_emails = [admin.email, admin2.email]
+    @new_user = FactoryBot.create(:user)
   end
 
   test "retrieves correct admin emails before sending notification" do
     job = RegistrationNotificationJob.new
-    job.perform(@new_user.email, @new_user.first_name, @new_user.last_name)
+    job.perform(@new_user.id)
 
-    assert_equal @expected_admin_emails, job.instance_variable_get(:@admin_email_list)
+    assert_equal @expected_admin_emails.to_set, job.instance_variable_get(:@admin_email_list).to_set
+
   end
 
   test "sends email when job executes" do
@@ -20,7 +23,7 @@ class RegistrationNotificationJobTest < ActiveJob::TestCase
     mock_mailer.expect(:deliver_now, true)
 
     AdminMailer.stub :registration_notification, mock_mailer do
-      RegistrationNotificationJob.new.perform(@new_user.email, @new_user.first_name, @new_user.last_name)
+      RegistrationNotificationJob.new.perform(@new_user.id)
     end
 
     mock_mailer.verify

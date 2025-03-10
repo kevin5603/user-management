@@ -10,11 +10,10 @@ class User < ApplicationRecord
   private
 
   def assign_default_role
-    default_role = Role.find_or_create_by(name: 'regular_user')
-    self.roles << default_role
+    self.roles << Role.get_default_role
   end
 
   def notify_admin
-    RegistrationNotificationJob.perform_async(self.email, self.first_name, self.last_name)
+    RegistrationNotificationJob.perform_async(self.id)
   end
 end

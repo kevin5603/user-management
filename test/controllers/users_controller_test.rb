@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   test "unconfirmed user cannot access index (requires email confirmation)" do
-    sign_in users(:unconfirmed_user)
+    sign_in FactoryBot.create(:user, :unconfirmed)
 
     get users_path
 
@@ -14,7 +14,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "unconfirmed user cannot access edit page (requires login)" do
-    @unconfirmed_user = users(:unconfirmed_user)
+    @unconfirmed_user = FactoryBot.create(:user, :unconfirmed)
 
     get edit_user_path(@unconfirmed_user.id)
 
@@ -30,7 +30,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "regular user is denied access to index" do
-    sign_in users(:regular_user)
+    sign_in FactoryBot.create(:user)
 
     get users_path
     assert_response :redirect
@@ -39,7 +39,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "manager access index" do
-    sign_in users(:manager_user)
+    sign_in FactoryBot.create(:user, :manager)
 
     get users_path
 
@@ -50,8 +50,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "manager cannot edit user (access denied)" do
-    manager = users(:manager_user)
-    user_to_edit = users(:regular_user)
+    manager = FactoryBot.create(:user, :manager)
+    user_to_edit = FactoryBot.create(:user)
 
     sign_in manager
     get edit_user_path(user_to_edit.id)
@@ -62,8 +62,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "manager cannot delete user (access denied)" do
-    manager = users(:manager_user)
-    user_to_delete = users(:regular_user)
+    manager = FactoryBot.create(:user, :manager)
+    user_to_delete = FactoryBot.create(:user)
 
     sign_in manager
     assert_no_difference "User.count" do
@@ -76,7 +76,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "admin can access index" do
-    sign_in users(:admin_user)
+    sign_in FactoryBot.create(:user, :admin)
 
     get users_path
 
@@ -87,10 +87,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "admin can access edit user page" do
-    admin = users(:admin_user)
-    sign_in admin
+    sign_in FactoryBot.create(:user, :admin)
 
-    user_to_edit = users(:regular_user)
+    user_to_edit = FactoryBot.create(:user, job_title: 'Software Engineer')
 
     get edit_user_path(user_to_edit.id)
 
@@ -108,15 +107,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "admin can edit user" do
-    admin = users(:admin_user)
-    user_to_edit = users(:regular_user)
+    admin = FactoryBot.create(:user, :admin)
+    user_to_edit = FactoryBot.create(:user)
+
+    admin_role = FactoryBot.create(:role, :admin)
+    manager_role = FactoryBot.create(:role, :manager)
     updated_params = {
       user: {
         first_name: "UpdatedFirst",
         last_name: "UpdatedLast",
         phone_number: "0987654321",
         job_title: "Updated Job",
-        role_ids: [2, 3]
+        role_ids: [admin_role.id, manager_role.id]
       }
     }
     sign_in admin
@@ -130,13 +132,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal updated_params[:user][:last_name], user_to_edit.last_name
     assert_equal updated_params[:user][:phone_number], user_to_edit.phone_number
     assert_equal updated_params[:user][:job_title], user_to_edit.job_title
-    assert_equal updated_params[:user][:role_ids], user_to_edit.roles.map(&:id)
+    assert_equal updated_params[:user][:role_ids], user_to_edit.roles.pluck(:id)
 
   end
 
   test "admin can delete user" do
-    admin = users(:admin_user)
-    user_to_delete = users(:regular_user)
+    admin = FactoryBot.create(:user, :admin)
+    user_to_delete = FactoryBot.create(:user)
 
     sign_in admin
     assert_difference "User.count", -1 do

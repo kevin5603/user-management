@@ -1,7 +1,7 @@
 .container
   %h1 User Management
   - if user_signed_in?
-    - if (%w[admin manager] & current_user.roles.map(&:name)).any?
+    - if can? :read, User
       = link_to "show all user", users_path, class: "btn btn-primary"
       %br/
       %br/

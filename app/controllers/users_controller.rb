@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[show edit update destroy]
-  authorize_resource class: false
+  load_and_authorize_resource
   include UsersHelper
 
   def index
@@ -27,13 +26,8 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def set_user
-    @user = User.find(params[:id])
-  end
-
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :phone_number, :job_title)
+    params.require(:user).permit(:email, :first_name, :last_name, :phone_number, :job_title, role_ids: [])
   end
 
 end

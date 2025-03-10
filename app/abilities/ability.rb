@@ -7,12 +7,12 @@ class Ability
     can :index, :home
     return unless user.present?
 
-    @roles = user.roles.map(&:name)
+    @roles = user.roles.pluck(:name)
     if @roles.include?('admin')
-      can :manage, :all
+      can [:read, :update, :destroy], User
     end
     if @roles.include?('manager')
-      can :read, :user
+      can :read, User
     end
   end
 end

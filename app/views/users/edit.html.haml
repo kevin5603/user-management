@@ -7,7 +7,7 @@
     %label Roles
     %br/
     - @roles.each do |role|
-      = check_box_tag "user[role_ids][]", value=role.id, @user.roles.map(&:name).include?(role.name)
+      = check_box_tag "user[role_ids][]", value=role.id, @user.roles.pluck(:id).include?(role.id)
       = role.name
       %br/
   .actions
