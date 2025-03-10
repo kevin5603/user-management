@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  include UsersHelper
 
   def index
     @users = User.all
@@ -16,6 +15,7 @@ class UsersController < ApplicationController
       @user.roles = Role.where(id: params[:user][:role_ids])
       redirect_to users_path, notice: "User updated successfully."
     else
+      @roles = Role.all
       render :edit, status: :unprocessable_entity
     end
   end
