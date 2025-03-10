@@ -26,13 +26,19 @@
     = form.label :phone_number
     = form.telephone_field :phone_number
 
-  .field
-    = form.label :password
-    = form.password_field :password
+  - if user.new_record? # Only show password fields for new users
+    .field
+      = form.label :password
+      = form.password_field :password
 
-  .field
-    = form.label :password_confirmation
-    = form.password_field :password_confirmation
+    .field
+      = form.label :password_confirmation
+      = form.password_field :password_confirmation
+
+  - if can?(:manage, User) # Only show this section for admins
+    .field
+      = form.label :role_ids, "Roles"
+      = form.collection_check_boxes :role_ids, Role.all, :id, :name
 
   .actions
     = form.submit

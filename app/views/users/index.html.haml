@@ -1,6 +1,9 @@
 %h1 User Management
 
-%h1 Users
+- if user_signed_in?
+  %p
+    Logged in as #{current_user.email}
+    = link_to "Logout", destroy_user_session_path, method: :delete
 
 %table.table
   %thead
@@ -20,35 +23,16 @@
         %td= user.phone_number
         %td
           = link_to 'Show', user
-          |
-          = link_to 'Edit', edit_user_path(user)
-          |
-          = link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }
+
+          - if can?(:update, user)
+            | |
+            = link_to 'Edit', edit_user_path(user)
+
+          - if can?(:destroy, user)
+            | |
+            = link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
-= link_to 'New User', new_user_path
--# - if user_signed_in?
--#   %p
--#     Logged in as #{current_user.email}
--#     = link_to "Logout", destroy_user_session_path, method: :delete
--#
--# %table
--#   %tr
--#     %th ID
--#     %th Email
--#     %th Name
--#     %th Role
--#     %th Actions
--#
--#   - @users.each do |user|
--#     %tr
--#       %td= user.id
--#       %td= user.email
--#       %td= "#{user.first_name} #{user.last_name}"
--#       %td= user.roles.pluck(:name).join(", ") # Shows user roles
--#       %td
--#         = link_to "View", user_path(user)
--#         - if can?(:update, user)
--#           | |
--#           = link_to "Edit", edit_user_path(user)
+- if can?(:create, User)
+  = link_to 'New User', new_user_path
