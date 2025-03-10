@@ -29,10 +29,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    # TODO: remove roles
     success = User.transaction do
-      @user.roles = Role.where(id: user_params[:role_ids]).to_a if user_params[:role_ids]
-      # TODO: add edit permission permission
+      @user.roles = Role.where(id: user_params[:role_ids]).to_a
       @user.update(user_params.except(:role_ids))
     end
 
