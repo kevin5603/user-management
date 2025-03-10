@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    Rails.logger.info 'OvO Configuring user parameters'
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone_number, :job_title])
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :job_title])
   end
