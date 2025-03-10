@@ -16,7 +16,7 @@
       <p>Welcome, <%= current_user.first_name %>, <%= current_user.last_name %>, <%= current_user.email %>!</p>
       <p>
         <%= link_to "Home", home_index_path %>
-        <% if can? :index, @user %>
+        <% if can? :index, current_user %>
           <%= link_to "View all users", users_path%>
         <% end %>
         <%= link_to "View my profile", user_path(current_user), method: :get if can? :show, current_user%>

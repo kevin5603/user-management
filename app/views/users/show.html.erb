@@ -9,8 +9,12 @@
     <%= @user.inspect %>
   </p>
   <p>
-    <% @user.roles.each do |role| %>
-      <%= role.name %>,
+    <% if @user.roles.any?  %>
+      <% @user.roles.each do |role| %>
+        <%= role.name %>,
+      <% end %>
+    <% else %>
+      No Roles
     <% end %>
   </p>
 </div>
