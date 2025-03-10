@@ -64,3 +64,4 @@ gem 'cancancan' # Role-based authorization
 gem 'sidekiq'   # Background job processing
 gem 'haml'      # View templating engine
 gem 'phonelib'  # phone number validation
+gem 'html2haml' # for haml conversion

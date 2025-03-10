@@ -1,0 +1,21 @@
+%h1 User Details
+
+%p
+  %strong Name:
+  = @user.full_name
+
+%p
+  %strong Email:
+  = @user.email
+
+%p
+  %strong Job Title:
+  = @user.job_title
+
+%p
+  %strong Phone Number:
+  = @user.phone_number
+
+= link_to 'Edit', edit_user_path(@user)
+|
+= link_to 'Back', users_path

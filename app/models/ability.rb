@@ -28,5 +28,14 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+    user ||= User.new # Guest user (not logged in)
+
+    if user.roles.exists?(name: 'admin')
+      can :manage, :all  # Admins can do everything
+    elsif user.roles.exists?(name: 'manager')
+      can :read, User     # Managers can only view users
+    else
+      can [:read, :update], User, id: user.id  # Regular users can only view and edit their own profile
+    end
   end
 end
