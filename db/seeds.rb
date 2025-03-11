@@ -18,6 +18,7 @@ admin_role.permissions.push(index_users, show_users, new_users, create_users, ed
 manager_role.permissions.clear
 manager_role.permissions.push(index_users, show_users)
 
+# TODO: write a create default user function. Should create a function here or a new helper method?
 # create default admin
 admin_user = User.find_by(email: 'admin@example.com')
 if admin_user.nil?
@@ -29,7 +30,9 @@ if admin_user.nil?
     password_confirmation: 'password'
   )
 end
+admin_user.skip_confirmation!
 admin_user.roles << admin_role unless admin_user.roles.include?(admin_role)
+admin_user.save!
 
 # create default manager
 manager_user = User.find_by(email: 'manager@example.com')
@@ -42,10 +45,13 @@ if manager_user.nil?
     password_confirmation: 'password'
   )
 end
+manager_user.skip_confirmation!
 manager_user.roles << manager_role unless manager_user.roles.include?(manager_role)
+manager_user.save!
 
-unless User.find_by(email: 'user@example.com')
-  User.create!(
+regular_user = User.find_by(email: 'user@example.com')
+if regular_user.nil?
+  regular_user = User.create!(
     first_name: 'default',
     last_name: 'user',
     email: 'user@example.com',
@@ -53,3 +59,5 @@ unless User.find_by(email: 'user@example.com')
     password_confirmation: 'password'
   )
 end
+regular_user.skip_confirmation!
+regular_user.save!
