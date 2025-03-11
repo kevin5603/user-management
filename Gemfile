@@ -41,6 +41,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'letter_opener'
+  gem 'haml'      # View templating engine
+  gem 'html2haml' # for haml conversion
 end
 
 group :test do
@@ -66,6 +68,4 @@ gem 'redis-namespace'
 
 gem 'devise'    # User authentication
 gem 'cancancan' # Role-based authorization
-gem 'haml'      # View templating engine
-gem 'html2haml' # for haml conversion
 gem 'phonelib'  # phone number validation

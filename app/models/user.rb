@@ -5,7 +5,6 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
-  # validates :phone_number, presence: true, phone: { possible: true, allow_blank: false, message: :invalid_phone }
   validate :validate_phone_number
 
   has_many :user_roles, dependent: :destroy
