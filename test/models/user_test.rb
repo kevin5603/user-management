@@ -3,9 +3,13 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
 
   def setup
-    @admin_user = users(:admin_user)
-    @manager_user = users(:manager_user)
-    @regular_user = users(:regular_user)
+    FactoryBot.create(:role, :admin_role)
+    FactoryBot.create(:role, :manager_role)
+    FactoryBot.create(:role, :regular_role)
+
+    @admin_user = FactoryBot.create(:user, :admin_user)
+    @manager_user = FactoryBot.create(:user, :manager_user)
+    @regular_user = FactoryBot.create(:user, :regular_user)
 
     ActionMailer::Base.default_url_options[:host] = 'localhost:3000'
   end
@@ -56,7 +60,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not @regular_user.valid?
   end
 
-  test "should assign Regular role on save if no roles" do
+  test "should assign Regular role.rb on save if no roles" do
     new_user = User.new(
       email: "newuser@example.com",
       password: "password123",
@@ -70,12 +74,12 @@ class UserTest < ActiveSupport::TestCase
     assert new_user.roles.exists?(name: 'Regular')
   end
 
-  test "should not assign Regular role if user already has roles" do
+  test "should not assign Regular role.rb if user already has roles" do
     assert_not @admin_user.roles.empty?
     initial_roles_count = @admin_user.roles.count
 
     @admin_user.save
-    assert_equal initial_roles_count, @admin_user.roles.count, "Additional role was added despite user already having roles"
+    assert_equal initial_roles_count, @admin_user.roles.count, "Additional role.rb was added despite user already having roles"
   end
 
   test "admin? returns true for admin users" do
@@ -90,7 +94,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "regular? returns true for regular users" do
     assert @regular_user.regular?
-    assert_not @admin_user.regular?, "Admin user incorrectly identified as regular user"
+    assert_not @admin_user.regular?, "Manager user incorrectly identified as regular user"
   end
 
 end

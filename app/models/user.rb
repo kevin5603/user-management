@@ -13,6 +13,8 @@ class User < ApplicationRecord
   before_save :assign_role
   after_create :notify_admins
 
+  scope :admin_users, -> { joins(:roles).where(roles: {name: 'Admin'}) }
+
   def assign_role
     self.roles.append(Role.find_by name: 'Regular') if self.roles.empty?
   end

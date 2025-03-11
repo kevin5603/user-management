@@ -66,3 +66,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'concurrent-ruby', '<= 1.3.4'
 
 gem "sidekiq", "~> 7.3"
+
+gem "factory_bot_rails", "~> 6.4"
+
+gem "faker", "~> 3.5"

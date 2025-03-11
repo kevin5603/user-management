@@ -18,7 +18,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    authorize! :edit, @user
   end
 
   # POST /users or /users.json
@@ -60,13 +59,9 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email, :job_title, :phone_number, :roles)
+      params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email, :job_title, :phone_number, :role_ids)
     end
 end

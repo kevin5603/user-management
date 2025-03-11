@@ -4,7 +4,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     ActionMailer::Base.default_url_options[:host] = 'localhost:3000'
 
-    @user = users(:admin_user)
+    @user = FactoryBot.create(:user, :admin_user)
     sign_in @user
   end
 
@@ -19,19 +19,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
-    assert_equal 3, User.count
-    user_params = {user: {
-      first_name: @user.first_name,
-      last_name: @user.last_name,
-      password: 'password',
-      password_confirmation: 'password',
-      email: 'user@gmail.com',
-      job_title: @user.job_title,
-      phone_number: @user.phone_number,
-      role_ids: 3
-    }}
-    post users_url, params: user_params
-    assert_equal 4, User.count
+    user_attributes = FactoryBot.attributes_for(:user)
+    before_count = User.count
+
+    post users_url, params: { user: user_attributes }
+
+    after_count = User.count
+    assert_equal before_count + 1, after_count, "User count should increase by 1"
+
     assert_redirected_to user_url(User.last)
   end
 
@@ -51,9 +46,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy user" do
-    assert_equal 3, User.count
-    delete user_url(@user)
-    assert_equal 2, User.count
-    assert_redirected_to users_url
+    admin = FactoryBot.create(:user, :admin_user)
+    user_to_delete = FactoryBot.create(:user)
+
+    sign_in admin
+    assert_difference "User.count", -1 do
+      delete user_path(user_to_delete.id)
+    end
+
+    assert_redirected_to users_path
   end
 end
