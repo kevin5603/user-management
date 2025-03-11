@@ -2,11 +2,14 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(
+    User.destroy_all
+    Role.find_or_create_by(name: "user")
+
+    @user = User.create!(
       first_name: "John",
       last_name: "Doe",
-      email: "john@example.com",
-      phone_number: "1234567890",
+      email: "john_#{SecureRandom.hex(4)}@example.com",
+      phone_number: "+1 415 555 1234",
       password: "password123",
       password_confirmation: "password123"
     )
@@ -42,7 +45,6 @@ class UserTest < ActiveSupport::TestCase
 
   test "email should be unique" do
     duplicate_user = @user.dup
-    @user.save
     assert_not duplicate_user.valid?
     assert_includes duplicate_user.errors[:email], "has already been taken"
   end
@@ -52,9 +54,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "default role assignment" do
-    # Create a default user role first
-    Role.find_or_create_by(name: "user")
-
     @user.save
     assert_includes @user.roles.pluck(:name), "user"
   end

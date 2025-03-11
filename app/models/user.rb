@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validate :validate_phone_number
@@ -16,8 +17,11 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  private
+
   def assign_default_role
-    self.roles << Role.find_by(name: "user") if self.roles.empty?
+    user_role = Role.find_or_create_by(name: "user")
+    self.roles << user_role if user_role.present? && self.roles.empty?
   end
 
   def validate_phone_number
