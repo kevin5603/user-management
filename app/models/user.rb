@@ -7,10 +7,14 @@ class User < ApplicationRecord
 
   after_create :assign_default_role, :notify_admin
 
+  scope :with_role, ->(role_name) { joins(:roles).where(roles: { name: role_name }) }
+
+
   private
 
   def assign_default_role
-    self.roles << Role.get_default_role
+    default_role = Role.get_default_role
+    self.roles << default_role unless self.roles.include?(default_role)
   end
 
   def notify_admin

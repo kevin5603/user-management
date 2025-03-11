@@ -136,6 +136,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "admin cannot update user with invalid phone number" do
+    admin = FactoryBot.create(:user, :admin)
+    user_to_edit = FactoryBot.create(:user, phone_number: "0987654321")
+    expect_phone_number = user_to_edit.phone_number
+
+    updated_params = {
+      user: {
+        phone_number: "invalid phone number"
+      }
+    }
+    sign_in admin
+
+    patch user_path(user_to_edit), params: updated_params
+
+    assert_equal expect_phone_number, user_to_edit.phone_number
+    assert_response :unprocessable_entity
+    assert_match "1 error prohibited this user from being saved:", response.body
+    assert_match "Phone number is invalid", response.body
+
+  end
+
   test "admin can delete user" do
     admin = FactoryBot.create(:user, :admin)
     user_to_delete = FactoryBot.create(:user)

@@ -1,13 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :get_roles, only: %i[show edit update]
   load_and_authorize_resource
 
   def index
     @users = User.all
-  end
-
-  def edit
-    @roles = Role.all
   end
 
   def update
@@ -15,7 +12,6 @@ class UsersController < ApplicationController
       @user.roles = Role.where(id: params[:user][:role_ids])
       redirect_to users_path, notice: "User updated successfully."
     else
-      @roles = Role.all
       render :edit, status: :unprocessable_entity
     end
   end
@@ -24,6 +20,11 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_path, notice: "User deleted successfully."
   end
+
+  def get_roles
+    @roles = Role.all
+  end
+
 
   private
   def user_params
