@@ -1,0 +1,20 @@
+%h1 New User Registration
+%p
+  Hello #{@admin.first_name},
+%p
+  A new user has registered on the platform:
+%table
+  %tr
+    %td Name:
+    %td= "#{@user.first_name} #{@user.last_name}"
+  %tr
+    %td Email:
+    %td= @user.email
+  %tr
+    %td Job Title:
+    %td= @user.job_title
+  %tr
+    %td Phone:
+    %td= @user.phone_number
+%p
+  Please review this user's information and take any necessary actions.
