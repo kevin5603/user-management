@@ -14,4 +14,12 @@ class User < ApplicationRecord
     message: 'must be a valid phone number',
     allow_nil: true
   }
+
+  after_create :notify_admins
+
+  private
+
+  def notify_admins
+    RegistrationNotificationEmailJob.perform_async(id)
+  end
 end
