@@ -1,14 +1,12 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
-  validates :phone_number, presence: true
-  # validates_plausible_phone :phone_number  # Uncomment if you're using phonelib
+  # validates :phone_number, presence: true, phone: { possible: true, allow_blank: false, message: :invalid_phone }
+  validate :validate_phone_number
 
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
@@ -23,9 +21,29 @@ class User < ApplicationRecord
     self.roles << Role.find_by(name: "user") if self.roles.empty?
   end
 
+  def validate_phone_number
+    if phone_number.blank?
+      errors.add(:phone_number, "can't be blank")
+      return
+    end
+
+    parsed_number = Phonelib.parse(phone_number)
+
+    unless parsed_number.valid?
+      error_message = if parsed_number.possible?
+                        "is not a valid phone number for the selected country."
+                      else
+                        "is not formatted correctly or too short/long."
+                      end
+      errors.add(:phone_number, error_message)
+    end
+  end
+
   private
 
   def notify_admins
-    NewUserNotificationJob.perform_later(self.id)
+    if Role.exists?(name: "admin")
+      NewUserNotificationJob.perform_later(self.id)
+    end
   end
 end

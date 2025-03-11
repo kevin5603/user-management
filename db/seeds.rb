@@ -11,7 +11,7 @@ admin = User.create!(
   last_name: 'Lin',
   email: 'ginalin@example.com',
   job_title: 'Administrator',
-  phone_number: '+1234567890',
+  phone_number: '+1 234 567 8900',
   password: 'Admin@123',
   password_confirmation: 'Admin@123'
 )
@@ -23,7 +23,7 @@ manager = User.create!(
   last_name: 'Smith',
   email: 'manager@example.com',
   job_title: 'Project Manager',
-  phone_number: '+1987654321',
+  phone_number: '+1 987 654 1321',
   password: 'Manager@123',
   password_confirmation: 'Manager@123'
 )
@@ -35,7 +35,7 @@ user = User.create!(
   last_name: "Test",
   email: "user1@example.com",
   job_title: "Employee",
-  phone_number: "+1000000000",
+  phone_number: "+1 234 567 4560",
   password: "User@123",
   password_confirmation: "User@123"
 )

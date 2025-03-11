@@ -58,11 +58,14 @@ gem 'concurrent-ruby', '<= 1.3.4'
 
 # Use PostgreSQL as the database for Active Record
 gem 'pg', '~> 1.2'
+
+# Background job processing
+gem 'sidekiq'
 gem 'redis'
 gem 'redis-namespace'
+
 gem 'devise'    # User authentication
 gem 'cancancan' # Role-based authorization
-gem 'sidekiq'   # Background job processing
 gem 'haml'      # View templating engine
-gem 'phonelib'  # phone number validation
 gem 'html2haml' # for haml conversion
+gem 'phonelib'  # phone number validation
