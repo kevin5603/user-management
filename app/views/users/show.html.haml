@@ -1,0 +1,31 @@
+%br/
+%div.container
+  .card{ style: "width: 18rem;" }
+    .card-body
+      %h5.card-title User Profile
+      %p.card-text
+        .field
+          %strong Email:
+          = @user.email
+
+        .field
+          %strong First Name:
+          = @user.first_name
+
+        .field
+          %strong Last Name:
+          = @user.last_name
+
+        .field
+          %strong Phone Number:
+          = @user.phone_number
+
+        .field
+          %strong Job Title:
+          = @user.job_title
+
+        .field
+          %strong Roles:
+          = @user.roles.pluck(:name).join(", ")
+      = link_to "Edit", edit_user_registration_path, class: "btn btn-primary"
+      = link_to "Back", root_path, class: "btn btn-primary"

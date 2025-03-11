@@ -1,0 +1,20 @@
+.field
+  = f.label :email
+  %br/
+  = f.email_field :email, autofocus: true, autocomplete: "email"
+.field
+  = f.label :'First Name'
+  %br/
+  = f.text_field :first_name
+.field
+  = f.label :'Last Name'
+  %br/
+  = f.text_field :last_name
+.field
+  = f.label :'Phone Number'
+  %br/
+  = f.text_field :phone_number
+.field
+  = f.label :'Job Title'
+  %br/
+  = f.text_field :job_title
