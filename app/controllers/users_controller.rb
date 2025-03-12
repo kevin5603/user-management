@@ -1,11 +1,15 @@
 class UsersController < ApplicationController
-  # Ensure only authenticated users can access except for new and create
   before_action :authenticate_user!, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 
   def index
     @users = User.accessible_by(current_ability)
+
+    # respond_to do |format|
+    #   format.html { render :index }
+    #   format.json { render json: @users }
+    # end
   end
 
   def new
@@ -34,12 +38,16 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @user  # Only admins can delete users
+        authorize! :destroy, @user  # Only admins can delete users
     @user.destroy
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
 
   def show
+    # respond_to do |format|
+    #   format.html { render :show }  # Ensure HTML template is rendered
+    #   format.json { render json: @user }
+    # end
   end
 
   def edit
@@ -54,8 +62,9 @@ class UsersController < ApplicationController
   def user_params
     permitted = [:first_name, :last_name, :email, :job_title, :phone_number, :password, :password_confirmation]
 
-    # Allow admins to assign roles
-    permitted << { role_ids: [] } if current_user&.roles&.exists?(name: "admin")
+    if current_user&.roles&.exists?(name: "admin")
+      permitted << { role_ids: [] } unless params[:id] == current_user.id.to_s
+    end
 
     params.require(:user).permit(permitted)
   end
