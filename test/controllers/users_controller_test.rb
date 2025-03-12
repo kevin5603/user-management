@@ -67,15 +67,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "admin can create a new user" do
     sign_in @admin
 
-    # Debug: Log exact redirect location
-    post users_path, params: @new_user_params
-    puts "Debugging Redirected to: #{response.redirect_url}"
+    # Print the initial User count before posting
+    initial_count = User.count
+    puts "Initial User Count: #{initial_count}"
 
+    # Attempt to create a new user and assert the change in count
     assert_difference("User.count", 1) do
       post users_path, params: @new_user_params
     end
 
-    assert_redirected_to user_path(User.last)
+    new_user = User.last
+
+    # If creation failed, output errors to help debug
+    if new_user.invalid?
+      puts "New user errors: #{new_user.errors.full_messages.join(", ")}"
+    end
+
+    # Debug: Print the redirect URL after the POST action
+    puts "Redirected to: #{response.redirect_url}"
+
+    # Assert that the response redirects to the show page of the newly created user
+    assert_redirected_to user_path(new_user)
   end
 
   test "admin can assign roles to a user" do

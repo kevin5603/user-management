@@ -5,11 +5,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.accessible_by(current_ability)
-
-    # respond_to do |format|
-    #   format.html { render :index }
-    #   format.json { render json: @users }
-    # end
   end
 
   def new
@@ -44,10 +39,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    # respond_to do |format|
-    #   format.html { render :show }  # Ensure HTML template is rendered
-    #   format.json { render json: @user }
-    # end
   end
 
   def edit
