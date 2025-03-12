@@ -3,13 +3,11 @@ class ApplicationController < ActionController::Base
   before_action :check_email_confirmed, if: -> { user_signed_in? && !Rails.env.test? }
 
   rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.error "Access Denied: #{exception.message}"
     respond_to do |format|
-      format.html { render "errors/unauthorized", status: :forbidden }  # Show a custom page
+      format.html { render "errors/unauthorized", status: :forbidden }
       format.json { render json: { error: "You are not authorized to access this page." }, status: :forbidden }
     end
-
-    Rails.logger.error "Access Denied: #{exception.message}"
-    redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 
   private
