@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AdminMailerTest < ActionMailer::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'should retrieve correct admin email list' do
+    # TODO: test
+  end
 end

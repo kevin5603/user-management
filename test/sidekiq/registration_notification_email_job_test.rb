@@ -1,6 +1,6 @@
 require 'test_helper'
 class RegistrationNotificationEmailJobTest < Minitest::Test
-  def test_example
-    skip "add some examples to (or delete) #{__FILE__}"
+  test 'sends email when perform' do
+    # TODO: test
   end
 end

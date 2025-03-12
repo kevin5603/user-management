@@ -2,8 +2,8 @@
 
 one:
   user: one
-  roles: one
+  role: one
 
 two:
   user: two
-  roles: two
+  role: two
