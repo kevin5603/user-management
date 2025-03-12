@@ -11,8 +11,9 @@ class Ability
       can :manage, :all
     elsif roles.include?('manager')
       can :read, User
+      can :update, User , :id => user.id
     else
-      can :read, User, id: user.id
+      can [:read, :update], User, id: user.id
     end
   end
 end

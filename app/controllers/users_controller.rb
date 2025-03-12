@@ -13,13 +13,20 @@ class UsersController < ApplicationController
   end
 
   def create
-    authorize! :create, User  # Only admins can create users
+    # Remove or modify this line if you want admins to create users
+    # authorize! :create, User  # Only admins can create users
+
     @user = User.new(user_params)
 
-    if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+    # Explicitly check if current user is admin instead of using authorize!
+    if current_user&.roles&.exists?(name: "admin")
+      if @user.save
+        redirect_to @user, notice: 'User was successfully created.'
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to root_path, alert: 'Not authorized to create users.'
     end
   end
 
