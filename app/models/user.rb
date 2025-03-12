@@ -45,8 +45,7 @@ class User < ApplicationRecord
   private
 
   def notify_admins
-    if Role.exists?(name: "admin")
-      NewUserNotificationJob.perform_later(self.id)
-    end
+    # perhaps check the admins exists first in the future
+    NewUserNotificationJob.perform_later(self.id)
   end
 end
