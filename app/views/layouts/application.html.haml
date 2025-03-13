@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title UserManagement
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    - if user_signed_in?
+      Signed in as #{current_user.email}. Not you?
+      \#{button_to "Sign out", destroy_user_session_path, method: :delete}
+    - else
+      = link_to "Sign up", new_user_registration_path
+      or
+      \#{link_to "sign in", new_user_session_path}
+    - flash.each do |name, msg|
+      = content_tag :div, msg, id: "flash_#{name}"
+    = yield

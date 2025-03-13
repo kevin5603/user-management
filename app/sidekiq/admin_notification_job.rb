@@ -1,0 +1,11 @@
+class AdminNotificationJob
+  include Sidekiq::Job
+
+  def perform(user_id)
+    user = User.find_by(id: user_id)
+    return unless user
+
+    admin_email = User.admin_users.pluck(:email)
+    NewRegistrationAdminMailer.new_user_notification(user, admin_email).deliver_now
+  end
+end

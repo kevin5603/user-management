@@ -3,6 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.6'
 
+gem 'pg'
+
+gem 'cancancan'
+
+gem 'devise'
+
+gem 'haml-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '= 6.1.7.6'
 # Use sqlite3 as the database for Active Record
@@ -31,6 +38,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'simplecov'
 end
 
 group :development do
@@ -41,7 +49,7 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  # gem 'spring'
 end
 
 group :test do
@@ -56,3 +64,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # fix logger error
 gem 'concurrent-ruby', '<= 1.3.4'
+
+gem "sidekiq", "~> 7.3"
+
+gem "factory_bot_rails", "~> 6.4"
+
+gem "faker", "~> 3.5"

@@ -1,0 +1,37 @@
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :confirmable
+
+  has_many :user_roles, dependent: :destroy
+  has_many :roles, through: :user_roles
+
+  validates :phone_number, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
+
+  before_save :assign_role
+  after_create :notify_admins
+
+  scope :admin_users, -> { joins(:roles).where(roles: {name: 'Admin'}) }
+
+  def assign_role
+    self.roles.append(Role.find_or_create_by name: 'Regular') if self.roles.empty?
+  end
+
+  def notify_admins
+    AdminNotificationJob.perform_async(self.id)
+  end
+
+  def admin?
+    roles.exists?(name: 'Admin')
+  end
+
+  def manager?
+    roles.exists?(name: 'Manager')
+  end
+
+  def regular?
+    roles.exists?(name: 'Regular')
+  end
+end

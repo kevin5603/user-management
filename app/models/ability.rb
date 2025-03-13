@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+class Ability
+  include CanCan::Ability
+
+  def initialize(user)
+    return unless user.present?
+
+    if user.admin?
+      can :manage, :all
+    elsif user.manager?
+      can :read, User
+      can [:read, :update], User, id: user.id
+    else
+      can [:read, :update], User, id: user.id
+    end
+
+  end
+end
