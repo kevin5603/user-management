@@ -15,14 +15,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # ----------------------------------------
   # Regular user
   # ----------------------------------------
-  test 'regular user should not get index' do
+  test 'regular user should not get index and get access denied' do
     sign_in FactoryBot.create(:user)
 
     get users_path
-    assert_response :redirect
+    assert_redirected_to access_denied_path
   end
 
-  test 'regular user should edit self' do
+  test 'regular user should be able update self' do
     user = FactoryBot.create(:user)
     sign_in user
 
@@ -38,7 +38,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'foo', user.first_name
   end
 
-  test 'regular user should not edit role' do
+  test 'regular user should not update role' do
     admin = FactoryBot.create(:user, :admin)
     user = FactoryBot.create(:user)
     sign_in user
@@ -52,7 +52,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_empty user.roles
   end
 
-  test 'regular user should not edit others' do
+  test 'regular user should not update others' do
     user = FactoryBot.create(:user)
     other_user = FactoryBot.create(:user)
 
@@ -100,7 +100,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'admin should edit any user and roles' do
+  test 'admin should update any user and roles' do
     admin = FactoryBot.create(:user, :admin)
     user_to_edit = FactoryBot.create(:user)
 
@@ -112,7 +112,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     patch user_path(user_to_edit.id), params: { user: updated_params }
     assert_redirected_to user_path(user_to_edit)
-    follow_redirect!
 
     user_to_edit.reload
     assert_equal admin.first_name, user_to_edit.first_name
