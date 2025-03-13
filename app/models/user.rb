@@ -16,7 +16,7 @@ class User < ApplicationRecord
   scope :admin_users, -> { joins(:roles).where(roles: {name: 'Admin'}) }
 
   def assign_role
-    self.roles.append(Role.find_by name: 'Regular') if self.roles.empty?
+    self.roles.append(Role.find_or_create_by name: 'Regular') if self.roles.empty?
   end
 
   def notify_admins

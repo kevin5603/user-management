@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  rescue_from CanCan::AccessDenied do
+  rescue_from CanCan::AccessDenied, ActiveModel::ForbiddenAttributesError do | exception |
     flash[:error] = "You are not authorized to perform this action"
     respond_to do |format|
       format.json { head :forbidden }

@@ -13,7 +13,7 @@ FactoryBot.define do
 
       after(:create) do |user|
         user.roles.clear
-        user.roles << Role.find_by(name: 'Admin')
+        user.roles << Role.find_or_create_by(name: 'Admin')
       end
     end
 
@@ -21,7 +21,7 @@ FactoryBot.define do
       job_title { 'Manager' }
 
       after(:create) do |user|
-        user.roles << Role.find_by(name: 'Manager')
+        user.roles << Role.find_or_create_by(name: 'Manager')
       end
     end
 
@@ -29,7 +29,7 @@ FactoryBot.define do
       job_title { 'SE' }
 
       after(:create) do |user|
-        user.roles << Role.find_by(name: 'Regular')
+        user.roles << Role.find_or_create_by(name: 'Regular')
       end
     end
   end
