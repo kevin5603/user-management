@@ -1,9 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyString
+index_users:
+  name: index
 
-two:
-  name: MyString
-  description: MyString
+show_users:
+  name: show
+
+new_users:
+  name: new
+
+create_users:
+  name: create
+
+edit_users:
+  name: edit
+
+update_users:
+  name: update
+
+destroy_users:
+  name: destroy
+
+update_user_roles:
+  name: update_user_roles
