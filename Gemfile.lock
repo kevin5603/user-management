@@ -92,6 +92,7 @@ GEM
       responders
       warden (~> 1.2.3)
     erubi (1.13.1)
+    erubis (2.7.0)
     eventmachine (1.2.7)
     factory_bot (6.5.1)
       activesupport (>= 6.1.0)
@@ -110,6 +111,11 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
+    html2haml (2.3.0)
+      erubis (~> 2.7.0)
+      haml (>= 4.0)
+      nokogiri (>= 1.6.0)
+      ruby_parser (~> 3.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     jbuilder (2.13.0)
@@ -233,6 +239,9 @@ GEM
       parser (>= 3.3.1.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    ruby_parser (3.21.1)
+      racc (~> 1.5)
+      sexp_processor (~> 4.16)
     rubyzip (2.4.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -251,6 +260,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.1.0)
+    sexp_processor (4.17.3)
     sidekiq (7.3.9)
       base64
       connection_pool (>= 2.3.0)
@@ -325,6 +335,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   haml (~> 6.3)
+  html2haml
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mailcatcher

@@ -1,0 +1,14 @@
+%h1 Users#show
+%div
+  = link_to "edit this user", edit_user_path(@user)
+%br/
+%div
+  %p
+    = @user.inspect
+  %p
+    - if @user.roles.any?
+      - @user.roles.each do |role|
+        = role.name
+        ,
+    - else
+      No Roles

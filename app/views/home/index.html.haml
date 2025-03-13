@@ -1,0 +1,26 @@
+- @user = current_user
+%h1 Home
+%h3 Feature
+%p
+  - if can? :index, @user
+    = link_to "view all users", users_path
+  - else
+    Cannnot view all users
+%h3 info
+%p
+  = @user.inspect
+%h3 Permissions
+%p
+  - if @user.roles.any?
+    - @user.roles.each do |role|
+      = role.name
+      ,
+  - else
+    No Roles
+- permissions = @user.roles.flat_map(&:permissions).uniq
+- if permissions.any?
+  %ul
+    - permissions.each do |permission|
+      %li= permission.name
+- else
+  %p No permissions found for this user.
