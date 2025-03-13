@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-  include DeviseCustomParams
-  before_action :check_email_confirmed, if: -> { user_signed_in? && !Rails.env.test? }
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.error "Access Denied: #{exception.message}"
@@ -10,12 +9,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
-
-  def check_email_confirmed
-    if current_user && !current_user.confirmed?
-      sign_out current_user
-      redirect_to new_user_session_path, alert: "You must confirm your email before logging in."
-    end
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :job_title, :phone_number])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :job_title, :phone_number])
   end
 end

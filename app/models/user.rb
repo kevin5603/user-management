@@ -17,6 +17,18 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def has_role?(role_name)
+    roles.exists?(name: role_name)
+  end
+
+  def admin?
+    has_role?('admin')
+  end
+
+  def manager?
+    has_role?('manager')
+  end
+
   private
 
   def assign_default_role
