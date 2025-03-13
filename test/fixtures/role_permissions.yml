@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 manager_index_users:
-  role: admin
+  role: manager
   permission: index_users
 
 manager_show_users:
-  role: admin
+  role: manager
   permission: show_users
 
 admin_index_users:
