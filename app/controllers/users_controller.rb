@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     @available_roles = Role.all if can? :update_user_roles, @user
   end
 
+  # TODO: a separated grant role endpoint?
   def update
     success = User.transaction do
       @user.roles = Role.where(id: user_params[:role_ids]).to_a
