@@ -1,5 +1,11 @@
 # user-management
 
+# ==TODO:== 
+- better cancancan
+- use postgres
+  - refactor permission model to -> action, subject, condition
+- use docker compose
+
 > a ruby on rails practice project
 
 [quick note](https://hackmd.io/@wasabi-neko/Syf9TQncyx)
