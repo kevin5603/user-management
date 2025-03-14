@@ -4,6 +4,9 @@ require 'sidekiq/testing'
 class UserTest < ActiveSupport::TestCase
 
   def setup
+    Sidekiq::Testing.fake!
+    Sidekiq::Job.clear_all
+
     @valid_user_param = {
       email: 'foo.bar@example.com',
       password: 'password',
