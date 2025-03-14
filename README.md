@@ -97,6 +97,29 @@ Start the server and confirm that there are no errors. Then, check [**http://loc
 
 ![image.png](assets/image.png)
 
+# Testing
+
+Before running the test, `mailcatcher` needs to be running in background
+> I ues mailcatcher to catch the mail locally
+
+```shell
+bin/bundel exec mailcatcher
+```
+
+run the test
+
+```shell
+rails test
+```
+
+run with coverage
+
+```shell
+rails test:coverage
+```
+
+check the coverage result at `converage/index.html`
+
 # Troubleshooting
 
 When creating and starting a new project I encountered some errors. I have documented them below for reference.

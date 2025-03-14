@@ -91,6 +91,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    docile (1.4.1)
     erubi (1.13.1)
     erubis (2.7.0)
     eventmachine (1.2.7)
@@ -267,6 +268,12 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.1)
+    simplecov_json_formatter (0.1.4)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -346,6 +353,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
   sidekiq (~> 7.3)
+  simplecov
   spring
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
