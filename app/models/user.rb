@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   after_create :assign_default_role, :notify_admins
 
+  scope :admin_users, -> { joins(:roles).where(roles: {name: 'Admin'}) }
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -57,7 +59,6 @@ class User < ApplicationRecord
   private
 
   def notify_admins
-    # perhaps check the admins exists first in the future
     NewUserNotificationJob.perform_later(self.id)
   end
 end

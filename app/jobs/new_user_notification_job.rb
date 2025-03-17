@@ -2,15 +2,13 @@ class NewUserNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(user_id)
-    new_user = User.find(user_id)
+    new_user = User.find_by(user_id)
+    return unless new_user
 
-    # Find all admins (assuming you have a Role model with 'admin' role)
-    admin_role = Role.find_by(name: 'admin')
-    admins = admin_role.users
+    admins = User.admin_users.pluck(:email)
+    return if admins.empty?
 
-    # Send notification to each admin
-    admins.each do |admin|
-      AdminNotificationMailer.new_user_notification(admin, new_user).deliver_now
-    end
+    # Send notification to all admins
+    AdminNotificationMailer.new_user_notification(admins, new_user).deliver_now
   end
 end
