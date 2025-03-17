@@ -18,7 +18,6 @@ admin_role.permissions.push(index_users, show_users, new_users, create_users, ed
 manager_role.permissions.clear
 manager_role.permissions.push(index_users, show_users)
 
-# TODO: write a create default user function. Should create a function here or a new helper method?
 # create default admin
 admin_user = User.find_by(email: 'admin@example.com')
 if admin_user.nil?

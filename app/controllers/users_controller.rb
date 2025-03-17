@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   def show; end
 
   def new
-    # TODO: keep the new here aside from registration.new aka /user/sign_up, for admin's add user page
     @user = User.new
   end
 
@@ -23,12 +22,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # TODO: do I really need registration.edit?
   def edit
     @available_roles = Role.all if can? :update_user_roles, @user
   end
 
-  # TODO: a separated grant role endpoint?
   def update
     success = User.transaction do
       @user.roles = Role.where(id: user_params[:role_ids]).to_a
