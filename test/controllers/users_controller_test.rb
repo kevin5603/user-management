@@ -22,6 +22,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to access_denied_path
   end
 
+  test 'regular user should view self-profile' do
+    user = FactoryBot.create(:user)
+    sign_in user
+
+    get user_path user
+    assert_response :success
+  end
+
+  test 'regular user should edit registration' do
+    user = FactoryBot.create(:user)
+    sign_in user
+
+    get edit_user_registration_path user
+    assert_response :success
+  end
+
   # ----------------------------------------
   # Manager
   # ----------------------------------------
@@ -54,6 +70,35 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     get users_path
     assert_response :success
+  end
+
+  test 'admin should get new' do
+    sign_in FactoryBot.create(:user, :admin)
+    get new_user_path
+    assert_response :success
+  end
+
+  test 'admin should get edit' do
+    sign_in FactoryBot.create(:user, :admin)
+    user = FactoryBot.create(:user)
+
+    get edit_user_path user
+    assert_response :success
+  end
+
+  test 'admin should create user' do
+    sign_in FactoryBot.create(:user, :admin)
+    assert_difference('User.count') do
+      post users_path, params: { user: FactoryBot.attributes_for(:user) }
+    end
+  end
+
+  test 'admin should destroy user' do
+    sign_in FactoryBot.create(:user, :admin)
+    user = FactoryBot.create(:user)
+    assert_difference('User.count', -1) do
+      delete user_path(user)
+    end
   end
 
   test 'admin should update any user and roles' do
