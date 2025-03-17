@@ -1,29 +1,4 @@
-= form_with model: @user do |f|
-  .field
-    = f.label :first_name
-    %br/
-    = f.text_field :first_name, autofocus: true
-  .field
-    = f.label :last_name
-    %br/
-    = f.text_field :last_name, autofocus: true
-  .field
-    = f.label :phone_number
-    %br/
-    = f.text_field :phone_number, autofocus: true
-  .field
-    = f.label :job_title
-    %br/
-    = f.text_field :job_title, autofocus: true
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  - if @available_roles.presence
-    .roles-selection
-      - @available_roles.each do |role|
-        %div
-          = check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: "user_role_#{role.id}"
-          = label_tag "user_role_#{role.id}", role.name
-  %div
-    = f.submit "Update"
+%h1 Edit User
+
+= render 'form', user: @user
+= link_to 'Back', users_path

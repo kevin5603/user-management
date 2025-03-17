@@ -11,10 +11,12 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @available_roles = Role.all if can? :update_user_roles, @user
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.except(:roles_ids))
+    @user.roles = Role.where(id: user_params[:roles_ids]).to_a
     if @user.save
       redirect_to @user
     else
@@ -27,6 +29,10 @@ class UsersController < ApplicationController
   end
 
   def update
+    if user_params[:password].blank?
+      user_params.delete(:password)
+      user_params.delete(:password_confirmation)
+    end
     success = User.transaction do
       @user.roles = Role.where(id: user_params[:role_ids]).to_a
       @user.update(user_params.except(:role_ids))
@@ -52,9 +58,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    # TODO: feels wired to use cancancan ability this way. maybe I should create another endpoint call user_roles?
-    basic_permits = %i[first_name last_name email job_title phone_number]
-    basic_permits.push(role_ids: []) if can? :update_user_roles, @user
-    params.require(:user).permit(basic_permits)
+    puts params.inspect
+    permits = %i[first_name last_name email job_title phone_number]
+    permits.push(:password, :password_confirmation) unless params[:user][:password].blank?
+    permits.push(role_ids: []) if can? :update_user_roles, @user
+    params.require(:user).permit(permits)
   end
 end

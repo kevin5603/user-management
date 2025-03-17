@@ -18,7 +18,7 @@
         - if can? :index, current_user
           = link_to "View all users", users_path
         = link_to "View my profile", user_path(current_user), method: :get if can? :show, current_user
-        = link_to "Edit my profile", edit_user_registration_path, method: :get if can? :edit, current_user
+        = link_to "Edit my profile", edit_user_registration_path, method: :get
         = link_to "Sign out", destroy_user_session_path, method: :delete
     - else
       / Content for guests

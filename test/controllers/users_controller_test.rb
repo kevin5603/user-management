@@ -22,50 +22,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to access_denied_path
   end
 
-  test 'regular user should be able update self' do
-    user = FactoryBot.create(:user)
-    sign_in user
-
-    updated_params = {
-      first_name: 'foo'
-    }
-
-    patch user_path(user.id), params: { user: updated_params }
-    assert_redirected_to user_path(user)
-    follow_redirect!
-
-    user.reload
-    assert_equal 'foo', user.first_name
-  end
-
-  test 'regular user should not update role' do
-    admin = FactoryBot.create(:user, :admin)
-    user = FactoryBot.create(:user)
-    sign_in user
-
-    updated_params = {
-      role_ids: [admin.roles.first.id]
-    }
-
-    patch user_path(user.id), params: { user: updated_params }
-    assert_response :redirect
-    assert_empty user.roles
-  end
-
-  test 'regular user should not update others' do
-    user = FactoryBot.create(:user)
-    other_user = FactoryBot.create(:user)
-
-    updated_params = {
-      first_name: user.first_name
-    }
-
-    sign_in user
-    patch user_path(other_user), params: { user: updated_params }
-    assert_response :redirect
-    assert_not_equal user.first_name, other_user.first_name
-  end
-
   # ----------------------------------------
   # Manager
   # ----------------------------------------

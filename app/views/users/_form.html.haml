@@ -1,11 +1,57 @@
-= form_with(model: user) do |form|
-  - if user.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(user.errors.count, "error")
-        prohibited this user from being saved:
-      %ul
-        - user.errors.each do |error|
-          %li= error.full_message
-  .actions
-    = form.submit
+.user-form
+  = form_for @user do |f|
+    - if @user.errors.any?
+      .error-messages
+        %h2
+          = pluralize(@user.errors.count, "error")
+          prohibited this user from being saved:
+        %ul
+          - @user.errors.full_messages.each do |message|
+            %li= message
+
+    %table.form-table
+      %tr.field
+        %td.label-col= f.label :first_name
+        %td.input-col= f.text_field :first_name, class: 'form-control'
+
+      %tr.field
+        %td.label-col= f.label :last_name
+        %td.input-col= f.text_field :last_name, class: 'form-control'
+
+      %tr.field
+        %td.label-col= f.label :job_title
+        %td.input-col= f.text_field :job_title, class: 'form-control'
+
+      %tr.field
+        %td.label-col= f.label :phone_number
+        %td.input-col= f.telephone_field :phone_number, class: 'form-control'
+
+      %tr.field
+        %td.label-col= f.label :email
+        %td.input-col= f.email_field :email, class: 'form-control'
+
+      %td.label-col= f.label :password, "New Password"
+      %td.input-col
+        = f.password_field :password, class: 'form-control'
+        %small.form-text.text-muted Leave blank if you don't want to change it
+
+      %tr.field
+        %td.label-col= f.label :password_confirmation, "Confirm New Password"
+        %td.input-col= f.password_field :password_confirmation, class: 'form-control'
+
+      - if @available_roles
+        %tr.field
+          %td.label-col= f.label :roles
+          %td.input-col
+            .role-checkboxes
+              - @available_roles.each do |role|
+                .role-checkbox
+                  = check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role), id: "user_role_#{role.id}"
+                  = label_tag "user_role_#{role.id}", role.name
+              = hidden_field_tag "user[role_ids][]", ""
+
+      %tr.actions
+        %td
+        %td
+          = f.submit class: 'btn btn-primary'
+          = link_to 'Cancel', users_path, class: 'btn btn-secondary'

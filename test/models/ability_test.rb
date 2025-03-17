@@ -11,8 +11,6 @@ class AbilityTest < ActiveSupport::TestCase
     ability = Ability.new(regular_user)
 
     assert ability.can?(:show, regular_user)
-    assert ability.can?(:edit, regular_user)
-    assert ability.can?(:update, regular_user)
 
     assert ability.cannot?(:index, regular_user)
     assert ability.cannot?(:update_user_roles, regular_user)
@@ -28,9 +26,7 @@ class AbilityTest < ActiveSupport::TestCase
 
     assert ability.can?(:index, User)
     assert ability.can?(:show, manager)
-    assert ability.can?(:show , @other_user)
-    assert ability.can?(:edit, manager)
-    assert ability.can?(:update, manager)
+    assert ability.can?(:show, @other_user)
 
     assert ability.cannot?(:edit, @other_user)
     assert ability.cannot?(:update, @other_user)

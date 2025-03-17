@@ -8,9 +8,7 @@ class Ability
 
     # default permission for regular user
     if user.id
-      can :show, User, id: user.id
-      can :edit, User, id: user.id
-      can :update, User, id: user.id
+      can :show, user, id: user.id # can show self
     end
 
     return if user.roles.empty?
