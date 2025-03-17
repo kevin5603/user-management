@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rubocop', require: false
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -42,6 +44,8 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'mailcatcher'
+  gem 'html2haml'
 end
 
 group :test do
@@ -50,9 +54,15 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # fix logger error
 gem 'concurrent-ruby', '<= 1.3.4'
+gem "devise", "~> 4.9"
+gem "cancancan", "~> 3.6"
+gem "sidekiq", "~> 7.3"
+gem "haml", "~> 6.3"

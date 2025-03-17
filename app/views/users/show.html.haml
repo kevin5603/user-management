@@ -1,0 +1,44 @@
+.user-profile
+  %h1 User Profile
+
+  .profile-container
+    .user-header
+      %h2= @user.first_name + ' ' + @user.last_name
+      .user-status
+        - if @user.confirmed?
+          %span.badge.badge-success Email Confirmed
+        - else
+          %span.badge.badge-warning Email Pending Confirmation
+
+    %table.info-table
+      %tr
+        %td Email:
+        %td= @user.email
+      %tr
+        %td Job Title:
+        %td= @user.job_title || "Not specified"
+      %tr
+        %td Phone Number:
+        %td= @user.phone_number || "Not specified"
+      %tr
+        %td Created:
+        %td= @user.created_at.strftime("%B %d, %Y")
+      %tr
+        %td Last Updated:
+        %td= @user.updated_at.strftime("%B %d, %Y")
+
+    - if @user.roles.any?
+      .user-roles
+        %h3 Assigned Roles
+        %ul.roles-list
+          - @user.roles.each do |role|
+            %li= role.name
+    - else
+      .user-roles
+        %h3 Assigned Roles
+        %p No roles assigned
+
+    .user-actions
+      - if can? :edit, current_user, id: @user.id
+        = link_to 'Edit this user', edit_user_path(@user), class: 'btn btn-primary'
+      = link_to 'Back to Users', users_path, class: 'btn btn-secondary'

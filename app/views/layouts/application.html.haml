@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title UserManagement
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    - if user_signed_in?
+      / Content for logged-in users
+      %p
+        Welcome, #{current_user.first_name}, #{current_user.last_name}, #{current_user.email}!
+      %p
+        = link_to "Home", home_index_path
+        - if can? :index, current_user
+          = link_to "View all users", users_path
+        = link_to "View my profile", user_path(current_user), method: :get if can? :show, current_user
+        = link_to "Edit my profile", edit_user_registration_path, method: :get
+        = link_to "Sign out", destroy_user_session_path, method: :delete
+    - else
+      / Content for guests
+      %p
+        = link_to "Sign in", new_user_session_path
+        = link_to "Sign up", new_user_registration_path
+    = yield

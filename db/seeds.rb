@@ -1,7 +1,62 @@
-# This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+admin_role = Role.find_or_create_by(name: 'admin', description: 'administer with full permission')
+manager_role = Role.find_or_create_by(name: 'manager', description: 'manager with view all permission')
+
+index_users = Permission.find_or_create_by(name: 'index', description: 'List all the users')
+show_users = Permission.find_or_create_by(name: 'show', description: 'View any user')
+new_users = Permission.find_or_create_by(name: 'new', description: 'Displays the form to create new users')
+create_users = Permission.find_or_create_by(name: 'create', description: 'Create a new user')
+edit_users = Permission.find_or_create_by(name: 'edit', description: 'Displays the form to edit users')
+update_users = Permission.find_or_create_by(name: 'update', description: 'Update users')
+destroy_users = Permission.find_or_create_by(name: 'destroy', description: 'Delete the user')
+update_user_roles = Permission.find_or_create_by(name: 'update_user_roles', description: 'update the roles of a user')
+
+admin_role.permissions.clear
+admin_role.permissions.push(index_users, show_users, new_users, create_users, edit_users, update_users, destroy_users, 
+                            update_user_roles)
+manager_role.permissions.clear
+manager_role.permissions.push(index_users, show_users)
+
+# create default admin
+admin_user = User.find_by(email: 'admin@example.com')
+if admin_user.nil?
+  admin_user = User.create!(
+    first_name: 'default',
+    last_name: 'admin',
+    email: 'admin@example.com',
+    password: 'password',
+    password_confirmation: 'password'
+  )
+end
+admin_user.skip_confirmation!
+admin_user.roles << admin_role unless admin_user.roles.include?(admin_role)
+admin_user.save!
+
+# create default manager
+manager_user = User.find_by(email: 'manager@example.com')
+if manager_user.nil?
+  manager_user = User.create!(
+    first_name: 'default',
+    last_name: 'manager',
+    email: 'manager@example.com',
+    password: 'password',
+    password_confirmation: 'password'
+  )
+end
+manager_user.skip_confirmation!
+manager_user.roles << manager_role unless manager_user.roles.include?(manager_role)
+manager_user.save!
+
+regular_user = User.find_by(email: 'user@example.com')
+if regular_user.nil?
+  regular_user = User.create!(
+    first_name: 'default',
+    last_name: 'user',
+    email: 'user@example.com',
+    password: 'password',
+    password_confirmation: 'password'
+  )
+end
+regular_user.skip_confirmation!
+regular_user.save!

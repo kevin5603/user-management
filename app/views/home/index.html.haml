@@ -1,0 +1,13 @@
+%h1 Home
+%h3 Feature
+%ul
+  %li
+    - if can? :show, current_user, id: current_user.id
+      = link_to "view my profile", user_path(current_user)
+    - else
+      Cannot view my profile
+  %li
+    - if can? :index, current_user
+      = link_to "view all users", users_path
+    - else
+      Cannnot view all users

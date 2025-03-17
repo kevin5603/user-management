@@ -1,0 +1,19 @@
+%p#notice= notice
+%h1 Users
+%button= link_to 'Create new user', new_user_path
+%table
+  %thead
+    %tr
+      %th{:colspan => "4"}
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td
+          = user.id
+          \.
+        %td= user.first_name
+        %td= user.last_name
+        %td= link_to 'Show', user_path(user)
+        %td= link_to 'Edit', edit_user_path(user)
+        %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
+%br/

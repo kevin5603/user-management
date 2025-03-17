@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+manager_index_users:
+  role: manager
+  permission: index_users
+
+manager_show_users:
+  role: manager
+  permission: show_users
+
+admin_index_users:
+  role: admin
+  permission: index_users
+
+admin_show_users:
+  role: admin
+  permission: show_users
+
+admin_new_users:
+  role: admin
+  permission: new_users
+
+admin_create_users:
+  role: admin
+  permission: create_users
+
+admin_edit_users:
+  role: admin
+  permission: edit_users
+
+admin_update_users:
+  role: admin
+  permission: update_users
+
+admin_destroy_users:
+  role: admin
+  permission: destroy_users
+
+admin_update_user_roles:
+  role: admin
+  permission: update_user_roles

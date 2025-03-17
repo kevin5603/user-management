@@ -2,4 +2,11 @@
 load File.expand_path("spring", __dir__)
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative "../config/boot"
+
+if ARGV[0] == 'test:coverage'
+  ARGV[0] = 'test'
+  ENV['COVERAGE'] = 'true'
+  puts 'Running tests with coverage'
+end
+
 require "rails/commands"

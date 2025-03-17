@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+index_users:
+  name: index
+
+show_users:
+  name: show
+
+new_users:
+  name: new
+
+create_users:
+  name: create
+
+edit_users:
+  name: edit
+
+update_users:
+  name: update
+
+destroy_users:
+  name: destroy
+
+update_user_roles:
+  name: update_user_roles

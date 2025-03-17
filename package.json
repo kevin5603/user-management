@@ -2,6 +2,7 @@
   "name": "user-management",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
