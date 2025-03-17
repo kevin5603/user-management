@@ -1,49 +1,63 @@
 # user-management
 
-# ==TODO:== 
-- better cancancan
-- use postgres
-  - refactor permission model to -> action, subject, condition
-- use docker compose
-
 > a ruby on rails practice project
 
 [quick note](https://hackmd.io/@wasabi-neko/Syf9TQncyx)
 
-## Refined Requirement
+## Run in dev
 
-### model
+Require `redis`, `sideqik`, `mailcatcher`
 
-- User has
-  - first_name _string_
-  - last_name _string_
-  - job_title _string_
-  - phone_number _string_ validate format
-  - email (devise)
-  - password (devise)
-  - has_many Role
-- Role has
-  - name _string_
-  - description _string_
-  - has_many Permissions
-  - _instances:
-    - admin
-    - manager
-    - user (regular user)
-- Permission has
-  - name _string_
-  - description _string_
-  - _instances:
-    - view user 
-    - crate user
-    - update user
-    - delete user
+```shell
+bin/bundle exec mailcatcher
+bin/bundle exec sideqik
+```
 
-### Feature
+```shell
+brew service start redis
+```
 
-- view
-- email verification (devise)
-- email notification (Sidekiq)
+
+```shell
+bin/rails server
+```
+
+## Structure
+
+### Model
+
+```
+User has_many Roles through user_roles
+Role has_many Permissions through role_permissions
+```
+
+### Route & Permission
+
+Use `devise` default routing `/auth/register/*` for edit/destroy current user
+Use `/user/edit` for admin to edit user profiles
+
+### Testing
+
+Before running the test, `mailcatcher` needs to be running in background
+> I ues mailcatcher to catch the mail locally
+
+```shell
+bin/bundle exec mailcatcher
+```
+
+run the test
+
+```shell
+rails test
+```
+
+run with coverage
+
+```shell
+rails test:coverage
+```
+
+check the coverage result at `converage/index.html`
 
 ## Requirement
 
@@ -96,29 +110,6 @@ bin/rails server
 Start the server and confirm that there are no errors. Then, check [**http://localhost:3000**](http://localhost:3000/) to verify that the current version information is displayed correctly.
 
 ![image.png](assets/image.png)
-
-# Testing
-
-Before running the test, `mailcatcher` needs to be running in background
-> I ues mailcatcher to catch the mail locally
-
-```shell
-bin/bundel exec mailcatcher
-```
-
-run the test
-
-```shell
-rails test
-```
-
-run with coverage
-
-```shell
-rails test:coverage
-```
-
-check the coverage result at `converage/index.html`
 
 # Troubleshooting
 
