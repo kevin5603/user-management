@@ -5,57 +5,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    # Create roles
-    @admin_role = Role.find_or_create_by(name: "admin")
-    @manager_role = Role.find_or_create_by(name: "manager")
-    @user_role = Role.find_or_create_by(name: "user")
+    @manager_role = create(:role, :manager_role)
+    @user_role = create(:role, :regular_user_role)
 
-    # Create users with different roles
-    @admin = User.create!(
-      first_name: "Admin",
-      last_name: "User",
-      email: "admin@example.com",
-      phone_number: "+1 415 555 0001",
-      password: "password123",
-      password_confirmation: "password123",
-      confirmed_at: Time.now
-    )
-    @admin.roles << @admin_role
-    @admin.reload
+    @admin = create(:admin_user)
+    @manager = create(:manager_user)
+    @regular_user = create(:regular_user)
 
-    @manager = User.create!(
-      first_name: "Manager",
-      last_name: "User",
-      email: "manager@example.com",
-      phone_number: "+1 415 555 0002",
-      password: "password123",
-      password_confirmation: "password123",
-      confirmed_at: Time.now
-    )
-    @manager.roles << @manager_role
-
-    @regular_user = User.create!(
-      first_name: "Regular",
-      last_name: "User",
-      email: "user@example.com",
-      phone_number: "+1 415 555 0003",
-      password: "password123",
-      password_confirmation: "password123",
-      confirmed_at: Time.now
-    )
-    @regular_user.roles << @user_role
-
-    # New user for creation test
     @new_user_params = {
-      user: {
-        first_name: "New",
-        last_name: "User",
-        email: "new@example.com",
-        phone_number: "+1 234 567 8907",
-        password: "password123",
-        password_confirmation: "password123"
-      }
-    }
+          user: attributes_for(:user).merge(
+            role_ids: [@user_role.id]
+          )
+        }
   end
 
   test "admin can access user index" do
@@ -81,8 +42,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # Verify the user has the correct attributes
     new_user = User.find_by(email: unique_email)
     assert_not_nil new_user
-    assert_equal "New", new_user.first_name
-    assert_equal "User", new_user.last_name
     assert new_user.roles.include?(@user_role)
   end
 

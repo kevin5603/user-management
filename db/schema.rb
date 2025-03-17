@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2025_03_06_205509) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
   create_table "user_roles", force: :cascade do |t|
