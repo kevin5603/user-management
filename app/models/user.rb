@@ -32,12 +32,10 @@ class User < ApplicationRecord
   end
 
   private
-
   def assign_default_role
     user_role = Role.find_or_create_by(name: "user")
-    self.roles << user_role if user_role.present? && self.roles.empty?
+    self.roles << user_role if self.roles.empty?
   end
-
   def validate_phone_number
     if phone_number.blank?
       errors.add(:phone_number, "can't be blank")
@@ -55,8 +53,6 @@ class User < ApplicationRecord
       errors.add(:phone_number, error_message)
     end
   end
-
-  private
 
   def notify_admins
     NewUserNotificationJob.perform_later(self.id)
