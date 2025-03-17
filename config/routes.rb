@@ -4,7 +4,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
-  get 'access_denied.html.erb', to: 'errors#access_denied', as: :access_denied
+  get 'access_denied', to: 'errors#access_denied', as: :access_denied
   get 'home/index'
 
   devise_for :users, path: 'auth', path_names: {
