@@ -1,0 +1,44 @@
+= form_with(model: user) do |form|
+  - if user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - user.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = form.label :first_name
+    = form.text_field :first_name
+
+  .field
+    = form.label :last_name
+    = form.text_field :last_name
+
+  .field
+    = form.label :email
+    = form.email_field :email
+
+  .field
+    = form.label :job_title
+    = form.text_field :job_title
+
+  .field
+    = form.label :phone_number
+    = form.telephone_field :phone_number
+
+  - if user.new_record? # Only show password fields for new users
+    .field
+      = form.label :password
+      = form.password_field :password
+
+    .field
+      = form.label :password_confirmation
+      = form.password_field :password_confirmation
+
+  - if can?(:manage, User) # Only show this section for admins
+    .field
+      = form.label :role_ids, "Roles"
+      = form.collection_check_boxes :role_ids, Role.all, :id, :name
+
+  .actions
+    = form.submit
